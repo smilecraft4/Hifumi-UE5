@@ -14,42 +14,11 @@ struct FHifumiPoint
 	GENERATED_BODY()
 
 public:
-	FHifumiPoint() : Location(0.0, 0.0, 0.0), Color(0.0, 0.0, 0.0), Opacity(1.0), Size(1.0), UV(0.0)
-	{
-	}
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector Location;
+	FVector4 Position; // x y z + alpha
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector Color;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	float Opacity;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	float Size;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	float UV;
-};
-
-USTRUCT(BlueprintType)
-struct FHifumiStroke
-{
-	GENERATED_BODY()
-
-public:
-	FHifumiStroke() = default;	
-	FHifumiStroke(const TArray<FHifumiPoint>& Points): Width(1.0), Points(Points)
-	{
-	}
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	float Width;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TArray<FHifumiPoint> Points;
+	FVector2D Info; // uv + width
 };
 
 /**
@@ -62,14 +31,10 @@ class HIFUMIIMPORTER_API UHifumiAsset : public UObject
 
 public:
 	UHifumiAsset(const FObjectInitializer& ObjectInitializer);
-	UHifumiAsset(const FString& Name, const FString& SourceFile);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FString SourceHifumiFile;
-
+	TArray<FHifumiPoint> Vertices;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FString Name;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TArray<FHifumiStroke> Strokes;
+	TArray<int> Indices;
 };
